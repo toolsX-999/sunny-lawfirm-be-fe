@@ -6,14 +6,14 @@ const nodemailer = require("nodemailer");
 const transporter = nodemailer.createTransport({
     host: "mail.privateemail.com",
     port: 465,
-    secure: false,
+    secure: true,
     auth: {
         user: process.env.EMAIL,
         pass: process.env.PASSWORD,
     },
-    tls: {
-        rejectUnauthorized: false
-    }
+    // tls: {
+    //     rejectUnauthorized: false
+    // }
 });
 
 const app = express();
@@ -30,7 +30,7 @@ app.post("/submit", async (req, res) => {
     const { name, email, selectDate, selectTime, serviceType } = req.body;
     try {
         await transporter.sendMail({
-            from: process.env.EMAIL,
+            from: email,
             to: process.env.EMAIL,
             subject: "Appointment Booked via Website",
             html: `
@@ -45,7 +45,7 @@ app.post("/submit", async (req, res) => {
         console.log("Request in /submit route successful");
         return res.status(200).json("Success")
     } catch (error) {
-        console.log("RError in /submit route. reason", error.message);
+        console.log("Error in /submit route. reason", error.message);
         return res.status(500).json("Error in /submit route. reason");
     }
 });
@@ -54,7 +54,7 @@ app.post("/contact-form", async (req, res) => {
     const { name, email, subject, message } = req.body;
     try {
         await transporter.sendMail({
-            from: process.env.EMAIL,
+            from: email,
             to: process.env.EMAIL,
             subject: "New Web Form Submission",
             html: `
