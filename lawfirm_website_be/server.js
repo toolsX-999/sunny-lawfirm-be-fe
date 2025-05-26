@@ -17,10 +17,14 @@ const transporter = nodemailer.createTransport({
 });
 
 const app = express();
-// ✅ Must be present to parse FormData from fetch
+
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cors());
+
+app.get("/keepup", (req, res) => {
+    return res.status(200).json({ status: "Server is up and running" });
+});
 
 app.post("/submit", async (req, res) => {
     const { name, email, selectDate, selectTime, serviceType } = req.body;
@@ -38,8 +42,10 @@ app.post("/submit", async (req, res) => {
                 <p><strong>Service Type:</strong> ${serviceType}</p>
               `
         });
+        console.log("Request in /submit route successful");
         return res.status(200).json("Success")
     } catch (error) {
+        console.log("Request in /submit route unsuccessful");
         return res.status(400).json("Bad Input");
     }
 });
