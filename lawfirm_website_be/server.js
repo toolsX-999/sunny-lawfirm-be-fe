@@ -18,10 +18,7 @@ const transporter = nodemailer.createTransport({
 
 const app = express();
 
-app.use(cors({
-    origin: 'https://nationalquestlawfirm.onrender.com',
-    methods: ['POST']
-}));
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 
 
