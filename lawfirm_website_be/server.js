@@ -5,15 +5,15 @@ const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
     host: "mail.privateemail.com",
-    port: 465,
-    secure: true,
+    port: 587,
+    secure: false,
     auth: {
         user: process.env.EMAIL,
         pass: process.env.PASSWORD,
     },
-    // tls: {
-    //     rejectUnauthorized: false
-    // }
+    tls: {
+        rejectUnauthorized: false
+    }
 });
 
 const app = express();
@@ -30,7 +30,7 @@ app.post("/submit", async (req, res) => {
     const { name, email, selectDate, selectTime, serviceType } = req.body;
     try {
         await transporter.sendMail({
-            from: email,
+            from: process.env.EMAIL,
             to: process.env.EMAIL,
             subject: "Appointment Booked via Website",
             html: `
@@ -54,7 +54,7 @@ app.post("/contact-form", async (req, res) => {
     const { name, email, subject, message } = req.body;
     try {
         await transporter.sendMail({
-            from: email,
+            from: process.env.EMAIL,
             to: process.env.EMAIL,
             subject: "New Web Form Submission",
             html: `
