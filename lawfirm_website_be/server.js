@@ -18,9 +18,12 @@ const transporter = nodemailer.createTransport({
 
 const app = express();
 
+app.use(cors({
+    origin: 'https://nationalquestlawfirm.onrender.com',
+    methods: ['POST']
+}));
 app.use(express.urlencoded({ extended: true }));
 
-app.use(cors());
 
 app.get("/keepup", (req, res) => {
     return res.status(200).json({ status: "Server is up and running" });
