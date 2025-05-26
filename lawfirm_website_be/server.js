@@ -45,8 +45,8 @@ app.post("/submit", async (req, res) => {
         console.log("Request in /submit route successful");
         return res.status(200).json("Success")
     } catch (error) {
-        console.log("Request in /submit route unsuccessful");
-        return res.status(500).json("Error in /submit route. reason: ", error.message);
+        console.log("RError in /submit route. reason", error.message);
+        return res.status(500).json("Error in /submit route. reason");
     }
 });
 
@@ -67,7 +67,8 @@ app.post("/contact-form", async (req, res) => {
         });
         return res.status(200).json("Success")
     } catch (error) {
-        return res.status(500).json("Error in /contact-form route. reason: ", error.message);
+        console.log("Error in /contact-form route. reason", error.message)
+        return res.status(500).json("Error in /contact-form route. reason");
     }
 });
 
